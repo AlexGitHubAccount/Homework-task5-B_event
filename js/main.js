@@ -23,7 +23,7 @@ let tomato = {name: "помидор", price: 14, calories: 11, amount: 1};
 let ham = {name: "ветчина", price: 24, calories: 123, amount: 1};
 let balyk = {name: "балык", price: 29, calories: 126, amount: 1};
 
-//Create a main set from our pizzas
+//Create a main array from our pizzas
 let arr = [
     {name: "Немецкая", ingredients: {tomatoSauce, crimeanOnion, olives, mozzarella, oregano, parsley, pickledMushrooms}, image: "img/1.jpg"},
     {name: "Новинка", ingredients: {creamSauce, champignon, chickenLeg, pork,crimeanOnion, cherryTomato, mozzarella, parmesanCheese, oregano, basil}, image: "img/2.jpg"},
@@ -43,7 +43,6 @@ let arr = [
 ];
 
 
-
 let allIngredientes = {};
 function createAllIngredients(allIngredientes){
     for(let i = 0; i < arr.length; i++){
@@ -52,13 +51,14 @@ function createAllIngredients(allIngredientes){
         }
     }
 }
-createAllIngredients(allIngredientes);
-let productsView = 'tile';
+createAllIngredients(allIngredientes);//Create object with all ingredients in one object
+
+let productsView = 'tile';//Сreate a new variable instead of a word tile (плитка)
 
 let tile = document.querySelector('.tile');
 let list = document.querySelector('.list');
 
-tile.addEventListener('click', function(){
+tile.addEventListener('click', function(){//For click create a structure from function renderProducts
     if(productsView != 'tile'){
         productsView = 'tile';
         clearProducts();
@@ -70,7 +70,7 @@ tile.addEventListener('click', function(){
     } else{
     }
 });
-list.addEventListener('click', function(){
+list.addEventListener('click', function(){//For click create a structure from function renderProducts
     if(productsView != 'list'){
         productsView = 'list';
         clearProducts();
@@ -81,25 +81,28 @@ list.addEventListener('click', function(){
         }
     }
 });
-function sortNamesToLow(arr){
+
+function sortNamesToLow(arr){//Sort in select name to low
     arr.sort((a, b) => a.name.replace(/ /g, "") > b.name.replace(/ /g, "") ? 1 : -1);
 }
-function sortNamesToHigh(arr){
+function sortNamesToHigh(arr){//Sort in select name to high
     arr.sort((a, b) => a.name.replace(/ /g, "") < b.name.replace(/ /g, "") ? 1 : -1);
 }
-function sortPricesToHigh(arr){
+function sortPricesToHigh(arr){//Sort in prices to high
     arr.sort((a, b) => a.price - b.price);
 }
 
-function sortPricesToLow(arr){
+function sortPricesToLow(arr){//Sort in prices to low
     arr.sort((a, b) => b.price - a.price);
 }
+
 let filteredArr = [];
 function filterIngredients(checkedIngredientes, arr){
     filteredArr = [];
     for(let i = 0; i < arr.length; i++){
-        if(checkIncludesIngredients(checkedIngredientes, arr[i].ingredients)){
-            filteredArr.push(arr[i]);
+        if(checkIncludesIngredients(checkedIngredientes, arr[i].ingredients)){//Look about this
+            // function on the string 109 below
+            filteredArr.push(arr[i]);//Create a filtered array from picked checkbox ingredients
         }
     }
 }
@@ -113,13 +116,14 @@ function checkIncludesIngredients(checkedIngredientes, pizzaObj){
     return counter === checkedIngredientes.length;
 }
 
-function clearProducts(){
+function clearProducts(){//Function - cleaner for our block div.products-list
     let productsCont = document.querySelector('.products-list');
     productsCont.innerHTML = '';
 }
-let productsList = document.querySelector('.products-list');
-function renderProducts(arr, productsView){
-    if(productsView === 'tile'){
+let productsList = document.querySelector('.products-list');//Call a main empty block div.products-list'
+
+function renderProducts(arr, productsView){//Build all structure for tiles and list
+    if(productsView === 'tile'){//Build all structure for tiles inside block div.products-list
         for(let i = 0; i < arr.length; i++){
             let productCard = document.createElement("div");
             productCard.classList.add('product-card');
@@ -137,7 +141,7 @@ function renderProducts(arr, productsView){
             productCardIngredientsTitle.innerText = "Состав: ";
             let ingredientsList = document.createElement('ul');
             for(let key in arr[i].ingredients){
-                var ingredient = document.createElement('li');
+                let ingredient = document.createElement('li');
                 if(Object.keys(arr[i].ingredients)[Object.keys(arr[i].ingredients).length - 1] === key){
                     ingredient.innerText = arr[i].ingredients[key].name;
                 } else if(Object.keys(arr[i].ingredients)[Object.keys(arr[i].ingredients).length - 1] !== key){
@@ -193,7 +197,7 @@ function renderProducts(arr, productsView){
             productCardPrice.append(productCardPriceTitle);
             productCardPrice.append(productCardPriceValue);
         }
-    } else if (productsView === 'list'){
+    } else if (productsView === 'list'){//Build all structure for a new list inside block div.products-list
         for(let i = 0; i < arr.length; i++){
             let productCard = document.createElement("div");
             productCard.classList.add('product-card--list');
@@ -215,10 +219,12 @@ function renderProducts(arr, productsView){
             productCardInfo.append(productCardPriceList);
         }
     }
-}
+}//Ending of the function renderProducts
+
 let namesSelect = document.querySelector('.names-select');
 let priceSelect = document.querySelector('.price-select');
-//сортировка по названию вывод
+
+//Sorting for our names in the tag select
 namesSelect.addEventListener('change', function(){
     if(priceSelect.value !== 'none'){
         priceSelect.value = 'none';
@@ -245,7 +251,8 @@ namesSelect.addEventListener('change', function(){
         }
     }
 });
-//Sort for price output
+
+////Sorting for our names in the tag select
 priceSelect.addEventListener('change', function(){
     if(namesSelect.value !== 'none'){
         namesSelect.value = 'none';
@@ -274,7 +281,7 @@ priceSelect.addEventListener('change', function(){
     }
 });
 
-//Filter for ingredients
+//Create an array with checked on checkbox ingredients from left side page (join all checked checkboxes)
 let checkedIngredientes = [];
 let checkedIngredientesUl = document.querySelector('.products-filter__ingredients-list');
 let checkedIngredientesLi = document.querySelectorAll('.products-filter__ingredients-item');
@@ -300,10 +307,11 @@ checkedIngredientesUl.addEventListener('click', function(e){
         checkedIngredientes = [];
     }
 });
-
 renderProducts(arr, productsView);
+
+//Create the second popup with a filter for changing our ingredients in pizza
 function renderPopup(target){
-    //Inner part of popup
+    //Create an inner part of popup
     let titleModal = document.createElement('h5');
     titleModal.classList.add('product-modal__title');
     titleModal.innerText = target.parentElement.querySelector('.product-card__name').innerText;
@@ -419,7 +427,7 @@ popUpContent.addEventListener('click', function(e){
         renderPopup(target);
     }
 });
-//close popup
+//Close our popup
 let popupClose = document.querySelector('.pop-up__close');
 popupClose.addEventListener('click', function(){
     clearProducts();
@@ -429,7 +437,7 @@ popupClose.addEventListener('click', function(){
     popUpClear();
 });
 
-//clean popup
+//Clean our second popup
 function popUpClear(){
     popUpContent.innerText = '';
 }
