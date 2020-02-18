@@ -307,14 +307,15 @@ checkedIngredientesUl.addEventListener('click', function(e){
         checkedIngredientes = [];
     }
 });
-renderProducts(arr, productsView);
+renderProducts(arr, productsView);//Create a start view via form tile (initial download)
 
 //Create the second popup with a filter for changing our ingredients in pizza
 function renderPopup(target){
-    //Create an inner part of popup
+    //Create tags and content in the inner part of the second popup
     let titleModal = document.createElement('h5');
     titleModal.classList.add('product-modal__title');
     titleModal.innerText = target.parentElement.querySelector('.product-card__name').innerText;
+    //Write a name of the current pizza in our second popup
     let priceCaliriesModal = document.createElement('div');
     priceCaliriesModal.classList.add('product-modal__price-calories');
     let priceModal = document.createElement('div');
